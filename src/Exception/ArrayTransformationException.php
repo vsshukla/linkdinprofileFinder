@@ -2,12 +2,13 @@
 
 /**
  * This file contains exception class for array transformation
+ * Exception default message
  *
  * PHP version 7
  *
  */
 
-declare (strict_types = 1);
+declare(strict_types = 1);
 
 namespace ProfileFinder\Exception;
 
@@ -18,5 +19,4 @@ class ArrayTransformationException extends \Exception
 {
     /** @var string $message Default message for array transformation exception */
     protected $message = 'Transformation of the array data failed.';
-
 }

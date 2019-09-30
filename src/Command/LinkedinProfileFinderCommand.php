@@ -5,11 +5,11 @@
  *
  * PHP version 7.3
  */
-declare (strict_types = 1);
+declare(strict_types = 1);
 
 namespace ProfileFinder\Command;
 
-use ProfileFinder\Service\LinkdinProfileFinder;
+use ProfileFinder\Service\LinkedinProfileFinder;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -17,11 +17,13 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * Class LinkedinProfileFinderCommand
- * @package ProfileFinder\Command\LinkedinProfileFinderCommand
+ * @package ProfileFinder\Command
  */
-
 class LinkedinProfileFinderCommand extends Command
 {
+    /** @var static $defaultName The Default Command Name.*/
+    protected static $defaultName = 'linkedin-profile:find';
+    
     /**
      * Configure commands
      *
@@ -29,9 +31,8 @@ class LinkedinProfileFinderCommand extends Command
      */
     protected function configure(): void
     {
-        $this->setName('u:input')
-            ->setDescription('Read user input')
-            ->setHelp('This command prints a message provided by the user')
+        $this->setDescription('Find Linkedin profile')
+            ->setHelp('This command finds Linkedin profile')
             ->addOption(
                 'local-path',
                 'f',
@@ -57,16 +58,16 @@ class LinkedinProfileFinderCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output): void
     {
-        $profileFinder = new LinkdinProfileFinder();
+        $profileFinder = new LinkedinProfileFinder();
         $remoteFile = $input->getOption('remote-path');
         $localFilePath = $input->getOption('local-path');
 
         if ($remoteFile) {
-            $response = $profileFinder->findProfileByUrl($remoteFile);
+            $response = $profileFinder->getProfileByUrl($remoteFile);
         }
 
         if ($localFilePath) {
-            $response = $profileFinder->findProfileByFile($localFilePath);
+            $response = $profileFinder->getProfileByFile($localFilePath);
         }
 
         echo "\n";

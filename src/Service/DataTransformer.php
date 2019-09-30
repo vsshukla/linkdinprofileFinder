@@ -5,7 +5,7 @@
  * PHP version 7.3
  */
 
-declare (strict_types = 1);
+declare(strict_types = 1);
 
 namespace ProfileFinder\Service;
 
@@ -13,24 +13,25 @@ use ProfileFinder\Exception\ArrayTransformationException;
 
 /**
  * Class Transformer
- * @package ProfileFinder\Service\DataTransformer
+ * @package ProfileFinder\Service
  */
-
 class DataTransformer
 {
+    
     /**
      * Transform json to array
      *
-     * @param string $data to be Transformed.
-     * @return array $arrayData The Linkdin Profile data.
+     * @param string $jsonData to be Transformed.
+     * @return array $profileData The linkedin Profile data
+     * @throws ArrayTransformationException
      */
-    public function transform(string $data): array
+    public function transform(string $jsonData): array
     {
-        if (empty($data)) {
-            throw new ArrayTransformationException('Linkdin profile not found.');
+        if (empty($jsonData)) {
+            throw new ArrayTransformationException('linkedin profile not found.');
         }
-        $arrayData = json_decode($data, true);
+        $profileData = json_decode($jsonData, true);
 
-        return $arrayData['data']['resultObject'];
+        return $profileData['data']['resultObject'];
     }
 }
